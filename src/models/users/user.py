@@ -22,14 +22,12 @@ class User(object):
         ## email : user email
         ## password : hashed password
         ## param :
-        user_data = Database.find_one("user", {"email": email})
+        user_data = Database.find_one("users", {"email": email})
         if user_data is None:
-
             raise UserErrors.UserNotExistsError('Your user does not exist.')
-            pass
+
         if not Utils.check_hashed_password(password, user_data['password']):
             raise UserErrors.IncorrectPasswordError('Your password was wrong.')
-            pass
 
         return True
 
