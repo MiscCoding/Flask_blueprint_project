@@ -38,7 +38,7 @@ def register_user():
     password = password.replace("\n", "")
 
     try:
-        if User.register(email, password):
+        if User.register_user(email, password):
             session['email'] = email
             return redirect(url_for(".user_alerts"))
 

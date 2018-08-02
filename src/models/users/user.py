@@ -29,25 +29,27 @@ class User(object):
         if not Utils.check_hashed_password(password, user_data['password']):
             raise UserErrors.UserError('Your password was wrong.')
 
-        @staticmethod
-        def register_user(email, password):
-            user_data = Database.find_one({"users": email})
+        return True
 
-            if user_data is not None:
+    @staticmethod
+    def register_user(email, password):
+        user_data = Database.find_one("users", {"users": email})
+
+        if user_data is not None:
                 # tell user they are registered
-                pass
+                raise UserErrors.UserAlreadyRegisteredError("The email you used to register already exists.")
 
-            if not Utils.email_is_valid(email):
-                pass
+        if not Utils.email_is_valid(email):
+                raise UserErrors.InvalidEmailError("The email does not have the right format")
 
-            User(email, Utils.hash_password(password)).save_to_db()
+        User(email, Utils.hash_password(password)).save_to_db()
 
-            return True
+        return True
 
-        def save_to_db(self):
+    def save_to_db(self):
             Database.insert("users", self.json())
 
-        def json(self):
+    def json(self):
             return {
                 "_id" : self._id,
                 "email" : self.email,
