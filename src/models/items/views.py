@@ -8,8 +8,3 @@ item_blueprint = Blueprint('item', __name__)
 def item_page(name):
     pass
 
-@item_blueprint.route('/load')
-def load_item():
-
-
-    pass
