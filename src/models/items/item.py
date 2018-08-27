@@ -1,3 +1,6 @@
+from src.common.database import Database
+import src.models.items.constants as ItemConstants
+
 __author__ = "inchan"
 import requests
 from bs4 import BeautifulSoup
@@ -26,5 +29,14 @@ class Item(object):
         match = pattern.search(string_price)
 
         self.price= match.group()
+
+    def save_to_mongo(self):
+        Database.insert(ItemConstants.COLLECTION, self.json())
+
+    def json(self):
+        return {
+            "name" : self.name,
+            "url" : self.url
+        }
 
 
