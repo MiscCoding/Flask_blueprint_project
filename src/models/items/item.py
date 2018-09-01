@@ -19,7 +19,7 @@ class Item(object):
         return "<Item {} with URL {}>".format(self.name, self.url)
 
     def load_item(self, tag_name, query):
-        request = requests.get(self.url)
+        request = requests.get(self.url, headers={'User-Agent': 'Mozilla/5.0'})
         content = request.content
         soup = BeautifulSoup(content, "html.parser")
         element = soup.find(tag_name, query)
