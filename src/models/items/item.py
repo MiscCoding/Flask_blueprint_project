@@ -1,3 +1,5 @@
+import uuid
+
 from src.common.database import Database
 import src.models.items.constants as ItemConstants
 
@@ -7,13 +9,14 @@ from bs4 import BeautifulSoup
 import re
 
 class Item(object):
-    def __init__(self, name, url, store):
+    def __init__(self, name, url, store, _id = None):
         self.name = name
         self.url = url
         self.store = store
         tag_name = store.tag_name
         query = store.query
         self.price = self.load_item(tag_name, query)
+        self._id = uuid.uuid4().hex if _id is None else _id
 
     def __repr__(self):
         return "<Item {} with URL {}>".format(self.name, self.url)
